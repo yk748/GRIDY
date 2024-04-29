@@ -1,0 +1,1 @@
+GRoup Integrative DYnamic factor models (GRIDY) is a dynamic factor model-based group-level analysis of multiple subjects' time series data. A fully functioning package is under development and is expected to be released soon. The related manuscript can be found at [Here](https://arxiv.org/abs/2307.15330).
