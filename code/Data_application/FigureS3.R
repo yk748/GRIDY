@@ -14,7 +14,7 @@ library(RColorBrewer)
 library(reshape2)
 
 # Load data from the previous step
-load("./Data_final.RData")
+load("./result/result_final.RData")
 
 # -----------------------------------------------------------------------------#
 # Creating Figure S3

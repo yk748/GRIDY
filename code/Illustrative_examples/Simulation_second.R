@@ -963,15 +963,9 @@ for (case in 1:6){
       # ----------------------------------------------------------- #
       time_taken <- Sys.time() - start_time
       cat("Currently ",iter,"th iteration is done. Taken time is,",time_taken,"\n")
-      
-      #-----------------------------------------------------------------#
-      # delete the following two lines:
-      file_name <- paste0("sim2_snr",case,"_type",set,".RData")
-      save( list_GRIDY,list_SCA_P,list_GICA,list_DSCA,list_DGICA,list_Unfitted_SCA_PF2,list_Unfitted_GICA,
-            file=file_name)
     }
     
-    file_name <- paste0("sim2_snr",case,"_type",set,".RData")
+    file_name <- paste0("./result/sim2_snr",case,"_type",set,".RData")
     save( list_GRIDY,list_SCA_P,list_GICA,list_DSCA,list_DGICA,list_Unfitted_SCA_PF2,list_Unfitted_GICA,
           file=file_name)
   }

@@ -23,28 +23,28 @@ g_legend <- function(a.gplot){
 }
 
 
-load("./sim1_d200T100K50_type1.RData")
+load("./result/sim1_d200T100K50_type1.RData")
 list_type1_d200T100K50 <- list(GRIDY=list_GRIDY,SCA_P=list_SCA_P,GICA=list_GICA,
                                DSCA=list_DSCA,DGICA=list_DGICA,
                                Unfitted_SCA_PF2=list_Unfitted_SCA_PF2,Unfitted_GICA=list_Unfitted_GICA)
-load("./sim1_d400T100K50_type1.RData")
+load("./result/sim1_d400T100K50_type1.RData")
 list_type1_d400T100K50 <- list(GRIDY=list_GRIDY,SCA_P=list_SCA_P,GICA=list_GICA,
                                DSCA=list_DSCA,DGICA=list_DGICA,
                                Unfitted_SCA_PF2=list_Unfitted_SCA_PF2,Unfitted_GICA=list_Unfitted_GICA)
-load("./sim1_d100T200K50_type1.RData")
+load("./result/sim1_d100T200K50_type1.RData")
 list_type1_d100T200K50 <- list(GRIDY=list_GRIDY,SCA_P=list_SCA_P,GICA=list_GICA,
                                DSCA=list_DSCA,DGICA=list_DGICA,
                                Unfitted_SCA_PF2=list_Unfitted_SCA_PF2,Unfitted_GICA=list_Unfitted_GICA)
-load("./sim1_d100T400K50_type1.RData")
+load("./result/sim1_d100T400K50_type1.RData")
 list_type1_d100T400K50 <- list(GRIDY=list_GRIDY,SCA_P=list_SCA_P,GICA=list_GICA,
                                DSCA=list_DSCA,DGICA=list_DGICA,
                                Unfitted_SCA_PF2=list_Unfitted_SCA_PF2,Unfitted_GICA=list_Unfitted_GICA)
 
-load("./sim1_d100T200K10_type1.RData")
+load("./result/sim1_d100T200K10_type1.RData")
 list_type1_d100T200K10 <- list(GRIDY=list_GRIDY,SCA_P=list_SCA_P,GICA=list_GICA,
                                DSCA=list_DSCA,DGICA=list_DGICA,
                                Unfitted_SCA_PF2=list_Unfitted_SCA_PF2,Unfitted_GICA=list_Unfitted_GICA)
-load("./sim1_d100T200K100_type1.RData")
+load("./result/sim1_d100T200K100_type1.RData")
 list_type1_d100T200K100 <- list(GRIDY=list_GRIDY,SCA_P=list_SCA_P,GICA=list_GICA,
                                 DSCA=list_DSCA,DGICA=list_DGICA,
                                 Unfitted_SCA_PF2=list_Unfitted_SCA_PF2,Unfitted_GICA=list_Unfitted_GICA)

@@ -91,7 +91,7 @@ df_index$site <- file_name_table$site_idx
 
 # Save the intermediate result
 # This data is used for drawing Figure S1
-save(df_index,r_hat,Tot_subject,file_name_table,file="./Data_intermediate.RData")
+save(df_index,r_hat,Tot_subject,file_name_table,file="./result/result_intermediate.RData")
 
 # -----------------------------------------------------------------------------#
 # Step 3: Screening subjects from the rank selection result
@@ -212,6 +212,6 @@ save(voxel_name_table,X_scale_ext,K1_idx,K2_idx,
      GRIDY_refitted,GRIDY_YK,
      SCA_P_refitted,SCA_P_YK,
      GICA_refitted,GICA_YK,
-     file="./Data_final.RData")
+     file="./result/result_final.RData")
 
 

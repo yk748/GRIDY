@@ -72,13 +72,8 @@ for (case in 1:5){
       time_taken <- Sys.time() - start_time
       cat(r,"th iteration completed.","Time taken is",time_taken,
           "and SNR is",set,"r_J is",r_J,"r_G is",r_G,"\n")
-      
-      #-----------------------------------------------------------------#
-      # delete the following two lines:
-      file_name <- paste0("sim3_set",set,"_d",dd,"T",TT,"K",KK,".RData")
-      save(r_hat, file=file_name)
     }
-    file_name <- paste0("sim3_set",set,"_d",dd,"T",TT,"K",KK,".RData")
+    file_name <- paste0("./result/sim3_set",set,"_d",dd,"T",TT,"K",KK,".RData")
     save(r_hat, file=file_name)
   }
 }

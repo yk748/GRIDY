@@ -24,27 +24,27 @@ g_legend <- function(a.gplot){
   return(legend)
 }
 
-load("./sim2_snr1_type2.RData"); 
+load("./result/sim2_snr1_type2.RData"); 
 list_snr_1_type2 <- list(GRIDY=list_GRIDY,SCA_P=list_SCA_P,GICA=list_GICA,
                          DSCA=list_DSCA,DGICA=list_DGICA,
                          Unfitted_SCA_PF2=list_Unfitted_SCA_PF2,Unfitted_GICA=list_Unfitted_GICA)
-load("./sim2_snr2_type2.RData"); 
+load("./result/sim2_snr2_type2.RData"); 
 list_snr_2_type2 <- list(GRIDY=list_GRIDY,SCA_P=list_SCA_P,GICA=list_GICA,
                          DSCA=list_DSCA,DGICA=list_DGICA,
                          Unfitted_SCA_PF2=list_Unfitted_SCA_PF2,Unfitted_GICA=list_Unfitted_GICA)
-load("./sim2_snr3_type2.RData"); 
+load("./result/sim2_snr3_type2.RData"); 
 list_snr_3_type2 <- list(GRIDY=list_GRIDY,SCA_P=list_SCA_P,GICA=list_GICA,
                          DSCA=list_DSCA,DGICA=list_DGICA,
                          Unfitted_SCA_PF2=list_Unfitted_SCA_PF2,Unfitted_GICA=list_Unfitted_GICA)
-load("./sim2_snr4_type2.RData"); 
+load("./result/sim2_snr4_type2.RData"); 
 list_snr_4_type2 <- list(GRIDY=list_GRIDY,SCA_P=list_SCA_P,GICA=list_GICA,
                          DSCA=list_DSCA,DGICA=list_DGICA,
                          Unfitted_SCA_PF2=list_Unfitted_SCA_PF2,Unfitted_GICA=list_Unfitted_GICA)
-load("./sim2_snr5_type2.RData"); 
+load("./result/sim2_snr5_type2.RData"); 
 list_snr_5_type2 <- list(GRIDY=list_GRIDY,SCA_P=list_SCA_P,GICA=list_GICA,
                          DSCA=list_DSCA,DGICA=list_DGICA,
                          Unfitted_SCA_PF2=list_Unfitted_SCA_PF2,Unfitted_GICA=list_Unfitted_GICA)
-load("./sim2_snr6_type2.RData"); 
+load("./result/sim2_snr6_type2.RData"); 
 list_snr_6_type2 <- list(GRIDY=list_GRIDY,SCA_P=list_SCA_P,GICA=list_GICA,
                          DSCA=list_DSCA,DGICA=list_DGICA,
                          Unfitted_SCA_PF2=list_Unfitted_SCA_PF2,Unfitted_GICA=list_Unfitted_GICA)
