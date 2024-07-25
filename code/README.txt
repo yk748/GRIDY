@@ -61,10 +61,13 @@ Rscript Figure7.R
 1. Open "Application.R" and make sure the directory is "./GRIDY/Data_application".
 2. execute all lines. Two separate files named "result_intermediate.RData" and "result_final.RData" are stored under "./GRIDY/Data_application/result"
 3. Open "FigureS1.R" and execute all lines. This file will load and use "result_intermediate.RData".
-4. Open "FigureS2.R" and execute all lines. This file will load and use "result_final.RData".
-5. Open "FigureS3.R" and execute all lines. This file will load and use "result_final.RData".
-6. Open "Figure6.R" and execute all lines. This file will load and use "result_final.RData".
-7. Open "Figure7.R" and execute all lines. This file will load and use "result_final.RData".
+4. Open "FigureS2.R" and execute all lines. This file will load and use "result_final_X.RData","result_final_GRIDY.RData","result_final_SCA_P.RData", and "result_final_GICA.RData".
+5. Open "FigureS3.R" and execute all lines. This file will load and use "result_final_X.RData","result_final_GRIDY.RData","result_final_SCA_P.RData", and "result_final_GICA.RData".
+
+6. Open "Figure6.R" and execute all lines. This file will load and use "result_final_X.RData","result_final_GRIDY.RData","result_final_SCA_P.RData", and "result_final_GICA.RData".
+
+7. Open "Figure7.R" and execute all lines. This file will load and use "result_final_X.RData","result_final_GRIDY.RData","result_final_SCA_P.RData", and "result_final_GICA.RData".
+
 
 ############################################
 # Way 3: If the ready-simulated results are used to produce the figures:
