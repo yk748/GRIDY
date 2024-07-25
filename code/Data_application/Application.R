@@ -202,14 +202,16 @@ GICA_YK <- YK_compute(K1_idx,K2_idx,rJ,rG1,rG2,X_scale_ext,GICA_refitted)
 
 
 # Save the final result
+# Due to the size, the result are stored in separate files
 # This data is used for drawing Figures S2-S3, 6, and 7
 save(voxel_name_table,X_scale_ext,K1_idx,K2_idx,
-     SCA_PF2_Joint,SCA_PF2_Group1,SCA_PF2_Group2,
-     SCA_P_Joint,SCA_P_Group1,SCA_P_Group2,
-     GICA_Joint,GICA_Group1,GICA_Group2,
+     file="./result/result_final_X.RData")
+save(SCA_PF2_Joint,SCA_PF2_Group1,SCA_PF2_Group2,
      GRIDY_refitted,GRIDY_YK,
+     file="./result/result_final_GRIDY.RData")
+save(SCA_P_Joint,SCA_P_Group1,SCA_P_Group2,
      SCA_P_refitted,SCA_P_YK,
+     file="./result/result_final_SCA_P.RData")
+save(GICA_Joint,GICA_Group1,GICA_Group2,
      GICA_refitted,GICA_YK,
-     file="./result/result_final.RData")
-
-
+     file="./result/result_final_GICA.RData")

@@ -14,7 +14,10 @@ library(RColorBrewer)
 library(reshape2)
 
 # Load data from the previous step
-load("./result/result_final.RData")
+load("./result/result_final_X.RData")
+load("./result/result_final_GRIDY.RData")
+load("./result/result_final_SCA_P.RData")
+load("./result/result_final_GICA.RData")
 
 # -----------------------------------------------------------------------------#
 # Creating Figure S2
