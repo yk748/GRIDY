@@ -1,5 +1,5 @@
 #-----------------------------------------------------------------------------#
-# Code for producing Figure S3 in Supplementary material
+# Code for producing Figure S3 in Supplemental material
 #-----------------------------------------------------------------------------#
 
 

@@ -1,9 +1,7 @@
 #-----------------------------------------------------------------------------#
 # Code for producing results in Data application section
-# Codes for plotting each figure are provided separately
+# Code for plotting each figure is provided separately
 #-----------------------------------------------------------------------------#
-
-
 
 # -----------------------------------------------------------------------------#
 # Step 0: Set up
