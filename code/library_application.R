@@ -1,5 +1,60 @@
+# -----------------------------------------------------------------------------#
+# Running data application
+# -----------------------------------------------------------------------------#
+# Packages required
+library(mvtnorm)
+library(Matrix)
+library(combinat)
+library(multiway) # For SCA and GICA
+library(ica) # For SCA and GICA
+library(readxl)
+library(ggplot2)
+library(latex2exp)
+library(ggpubr)
+library(RColorBrewer)
+library(reshape2)
+library(gridExtra)
+
 #--------------------------------------------------#
-# Factor_regression function
+#   Function name : factor_regression    												  
+#
+#   Project : "Group integrative dynamic factor models 
+#             with application to multiple subject brain connectivity"
+#
+#   Maintainer : Younghoon Kim                     
+#
+#   Date : Sep. 1st, 2024
+#
+#   Purpose : subject-wise regression used in estimation of factor series. 
+#             See (18) in Section 3.3 for the detail.
+#             The input of this function is slightly different from that of the function in 
+#             the same name under library_simulation since this function can handle 
+#             unequal numbers of subjects in groups and contains the exceptional handling 
+#             that can be encountered in real data applications. But their roles are the same.
+#
+#   R version 4.0.5 (2021-03-31)                                    
+#
+#   Input:    
+#    @ K1_idx : subject indices belonging to group 1.
+#    @ K2_idx : subject indices belonging to group 2.
+#    @ r_J : number of joint factor series.
+#    @ r_G1 : number of group individual factor series in group 1.
+#    @ r_G2 : number of group individual factor series in group 2.
+#    @ Series_observation : Observed data. Observation X is called.
+#    @ Series_joint : joint components from previous step. 
+#                     Estimates of joint loadings are called. 
+#    @ Series_group1 : group individual components of the first group from previous step.
+#                      Estimates of group individual loadings of the group 1 are called.
+#    @ Series_group2 : group individual components of the second group from previous step.
+#                      Estimates of group individual loadings of the group 2 are called.
+# 
+#   Output:
+#    @ factor_joint : estimated joint factor series.
+#    @ factor_group1 : estimated group individual factor series of group 1.
+#    @ factor_group2 : estimated group individual factor series of group 2.
+#    @ noise_refitted : estimated residuals after fitting factor series.
+#
+#   Required R packages : Matrix_1.5-1.
 #--------------------------------------------------#
 factor_regression <- function(K1_idx,K2_idx,r_J,r_G1,r_G2,
                               Series_observation,Series_joint,Series_group1,Series_group2){
@@ -56,9 +111,50 @@ factor_regression <- function(K1_idx,K2_idx,r_J,r_G1,r_G2,
 }
 
 #--------------------------------------------------#
-# Yule-Walker function
+#   Function name : YW_compute   												  
+#
+#   Project : "Group integrative dynamic factor models 
+#             with application to multiple subject brain connectivity"
+#
+#   Maintainer : Younghoon Kim                     
+#
+#   Date : Sep. 1st, 2024
+#
+#   Purpose : compute Yule-Walker equation for estimating 
+#             vector autoregressive (VAR) transition matrices and 
+#             covariance matrices of noise for all subjects 
+#             by taking the output of factor_regression. 
+#             The input of this function is slightly different from that of the function in 
+#             the same name under library_simulation since this function can handle 
+#             unequal numbers of subjects in groups and contains the exceptional handling 
+#             that can be encountered in real data applications. But their roles are the same.
+#
+#   R version 4.0.5 (2021-03-31)                                    
+#
+#   Input:    
+#    @ K1_idx : subject indices belonging to group 1.
+#    @ K2_idx : subject indices belonging to group 2.
+#    @ r_J : number of joint factors.
+#    @ r_G1 : number of group individual factor series in group 1.
+#    @ r_G2 : number of group individual factor series in group 2.
+#    @ Series_observation : Observed data. Observation X is called.
+#    @ factor_list: list of estimated factor series.
+# 
+#   Output:
+#    @ Psi_joint_hat : VAR transition matrices of estimated joint factor series.
+#    @ Eta_joint_hat : covariance matrices of noises of estimated joint factor series
+#    @ Psi_indiv1_hat : VAR transition matrices of estimated group individual 
+#                       factor series in group 1.
+#    @ Eta_indiv1_hat : covariance matrices of noises of estimated 
+#                        group individual factor series in group 1.
+#    @ Psi_indiv2_hat : VAR transition matrices of estimated group individual 
+#                       factor series in group 2.
+#    @ Eta_indiv2_hat : covariance matrices of noises of estimated 
+#                        group individual factor series in group 2.
+# 
+#   Required R packages : Matrix_1.5-1.
 #--------------------------------------------------#
-YK_compute <- function(K1_idx,K2_idx,r_J,r_G1,r_G2,Series_observation,factor_list){
+YW_compute <- function(K1_idx,K2_idx,r_J,r_G1,r_G2,Series_observation,factor_list){
   
   Psi_joint_hat <- array(NA,dim=c(r_J,r_J,(length(K1_idx) + length(K2_idx))))
   Eta_joint_hat <- array(NA,dim=c(r_J,r_J,(length(K1_idx) + length(K2_idx))))

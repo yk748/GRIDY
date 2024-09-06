@@ -1,17 +1,32 @@
 #-----------------------------------------------------------------------------#
-# Code for producing Figure S3 in Supplemental material
+#   File name : FigureS3.R    												  
+#
+#   Project : "Group integrative dynamic factor models 
+#             with application to multiple subject brain connectivity"
+#
+#   Maintainer : Younghoon Kim                     
+#
+#   Date : Sep. 1st, 2024
+#
+#   Purpose : code for producing results for plotting Figure S3 in Supplemental material
+#
+#   R version 4.0.5 (2021-03-31)                                     
+#
+#   Input data file : /Data_application/result/result_final_X.RData
+#                     /Data_application/result/result_final_GRIDY.RData
+#                     /Data_application/result/result_final_SCA_P.RData
+#                     /Data_application/result/result_final_GICA.RData
+# 
+#   Output data file : /Data_application/figures/FigureS3.pdf
+#
+#   Required R packages : ggplot2_3.4.0, latex2exp_0.9.6, ggpubr_0.5.0, RColorBrewer_1.1-3,
+#                         reshape2_1.4.4, and gridExtra_2.3
 #-----------------------------------------------------------------------------#
-
-
 # -----------------------------------------------------------------------------#
 # Preparation
 # -----------------------------------------------------------------------------#
-# Packages required
-library(ggplot2)
-library(latex2exp)
-library(ggpubr)
-library(RColorBrewer)
-library(reshape2)
+# Load source code from the parent directory
+source(paste0(dirname(getwd()),"/","library_application.R"))
 
 # Load data from the previous step
 load("./result/result_final_X.RData")
@@ -242,7 +257,7 @@ plot_tmp <- ggarrange(
                labeller=labeller(structure=str.labs,method=method.labs,factor=factor.labs)),
   ncol=2,common.legend=TRUE,legend="bottom")
 
-pdf(file = "./FigureS3.pdf", width = 11.5, height = 10.5)
+pdf(file = "./figures/FigureS3.pdf", width = 11.5, height = 10.5)
 par(mar=c(0,0,0,0))
 plot_tmp
 dev.off()

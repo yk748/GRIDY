@@ -1,16 +1,30 @@
 #-----------------------------------------------------------------------------#
-# Code for producing Figure S1 in Supplemental material
+#   File name : FigureS1.R    												  
+#
+#   Project : "Group integrative dynamic factor models 
+#             with application to multiple subject brain connectivity"
+#
+#   Maintainer : Younghoon Kim                     
+#
+#   Date : Sep. 1st, 2024
+#
+#   Purpose : code for producing results for plotting Figure S1 in Supplemental material
+#
+#   R version 4.0.5 (2021-03-31)                                      
+#
+#   Input data file : /Data_application/result/result_intermediate.RData
+# 
+#   Output data file : /Data_application/figures/FigureS1.pdf
+#
+#   Required R packages : ggplot2_3.4.0, latex2exp_0.9.6, ggpubr_0.5.0, RColorBrewer_1.1-3,
+#                         reshape2_1.4.4, and gridExtra_2.3
 #-----------------------------------------------------------------------------#
 
 # -----------------------------------------------------------------------------#
 # Preparation
 # -----------------------------------------------------------------------------#
-# Packages required
-library(ggplot2)
-library(latex2exp)
-library(ggpubr)
-library(RColorBrewer)
-library(reshape2)
+# Load source code from the parent directory
+source(paste0(dirname(getwd()),"/","library_application.R"))
 
 # Load data from the previous step
 load("./result/result_intermediate.RData")
@@ -90,7 +104,7 @@ G2_hist <- ggplot(df_hist_G2) +
 # -----------------------------------------------------------------------------#
 plot_tmp <- ggarrange(G_hist,G1_hist,G2_hist,nrow=3,common.legend=TRUE,legend="bottom")
 
-pdf(file = "./FigureS1.pdf", width = 11.5, height = 10.5)
+pdf(file = "./figures/FigureS1.pdf", width = 11.5, height = 10.5)
 par(mar=c(0,0,0,0))
 plot_tmp
 dev.off()

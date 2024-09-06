@@ -1,5 +1,33 @@
 #--------------------------------------------------#
-# AJIVE
+#   Function name : ajive    												  
+#
+#   Originally developed by Iain Carmichael (2020).                    
+#   
+#   citation: r jive: First Github release (2020),
+#             GitHub Repository, https://github.com/idc9/r_jive
+# 
+#   Last visit date : Sep. 1st, 2024
+#
+#   R version 4.0.5 (2021-03-31)  
+#
+#   Purpose : Segmentation of multi-view data 
+#             by using angle-based joint component identification.  
+#             The reference of this R implementation is 
+#             Feng, Q., Jiang, M., Hannig, J., and Marron, J.S. (2018),
+#             "Angle-based joint and individual variation explained",    
+#             Journal of multivariate analysis, 166, 241-265.
+#
+#   Note: Since many years has passed from the last update from the maintainers, 
+#         some command lines in ajive are not working as desired.
+#         To align with the current R version,
+#         the main function of the package is extracted by Younghoon Kim, 
+#         the author of "Group integrative dynamic factor models 
+#         with application to multiple subject brain connectivity"
+#         The orignal package can be obtained at https://github.com/idc9/r_jive.
+#   
+#   Input: To check the input, please see vignette page of ajive in ajive package.
+#
+#   Output: To check the output, please see vignette page of ajive in ajive package.
 #--------------------------------------------------#
 ajive <- function(blocks, initial_signal_ranks, full=TRUE, n_wedin_samples=1000, n_rand_dir_samples=1000, joint_rank=NA){
   

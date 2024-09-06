@@ -1,18 +1,29 @@
 #-----------------------------------------------------------------------------#
-# Code for producing results for the first simulation setting in Illustrative example section
-# Codes for plotting Figures 1 and 2 are provided separately
+#   File name : Simulation_first.R    												  
+#
+#   Project : "Group integrative dynamic factor models 
+#             with application to multiple subject brain connectivity"
+#
+#   Maintainer : Younghoon Kim                     
+#
+#   Date : Sep. 1st, 2024
+#
+#   Purpose : code for producing results for the first simulation setting 
+#             in Illustrative example section. Codes for plotting Figures 1 and 2 
+#             are provided separately
+#
+#   R version 4.0.5 (2021-03-31)                                    
+#
+#   Input data file : ---- 
+# 
+#   Output data file : /Illustrative_examples/result/sim1_d-T-K-_type-.RData
+#
+#   Required R packages : combinat_0.0-8, mvtnorm_1.2-5, and Matrix_1.5-1.
 #-----------------------------------------------------------------------------#
 
 # -----------------------------------------------------------------------------#
 # Running simulation
 # -----------------------------------------------------------------------------#
-# Packages required
-library(mvtnorm)
-library(Matrix)
-library(combinat)
-library(multiway) # For SCA and GICA
-library(ica) # For SCA and GICA
-
 # Load source codes from the parent directory
 source(paste0(dirname(getwd()),"/","gica.R")) # For SCA and GICA
 source(paste0(dirname(getwd()),"/","AJIVE_retrieve.R"))
@@ -154,7 +165,7 @@ for (case in 1:6){
                                           SCA_PF2_Joint,
                                           SCA_PF2_Group1,
                                           SCA_PF2_Group2)
-      GRIDY_YK <- YK_compute(dd,TT,KK,r_J,r_G,Control_param,GRIDY_refitted)
+      GRIDY_YK <- YW_compute(dd,TT,KK,r_J,r_G,GRIDY_refitted)
       
       # SCA-P:
       # Refit factor series & Run Yule-Walker:
@@ -162,7 +173,7 @@ for (case in 1:6){
                                           SCA_P_Joint,
                                           SCA_P_Group1,
                                           SCA_P_Group2)
-      SCA_P_YK <- YK_compute(dd,TT,KK,r_J,r_G,Control_param,SCA_P_refitted)
+      SCA_P_YK <- YW_compute(dd,TT,KK,r_J,r_G,SCA_P_refitted)
       
       # GICA:
       # Refit factor series & Run Yule-Walker:
@@ -170,7 +181,7 @@ for (case in 1:6){
                                          GICA_Joint,
                                          GICA_Group1,
                                          GICA_Group2)
-      GICA_YK <- YK_compute(dd,TT,KK,r_J,r_G,Control_param,GICA_refitted)
+      GICA_YK <- YW_compute(dd,TT,KK,r_J,r_G,GICA_refitted)
       
       #-----------------------------------------------------------------#
       # 4. Construct dynamics (Unfitted_SCA_PF2,Unfitted_GICA):
@@ -182,7 +193,7 @@ for (case in 1:6){
       Factor_unfitted_SCA_PF2$factor_group1 <- SCA_PF2_Group1$D
       Factor_unfitted_SCA_PF2$factor_group2 <- SCA_PF2_Group2$D
       
-      Unfitted_SCA_PF2_YK <- YK_compute(dd,TT,KK,r_J,r_G,Control_param,Factor_unfitted_SCA_PF2)
+      Unfitted_SCA_PF2_YK <- YW_compute(dd,TT,KK,r_J,r_G,Factor_unfitted_SCA_PF2)
       
       # Unfitted_GICA:
       # Run Yule-Walker:
@@ -190,7 +201,7 @@ for (case in 1:6){
       Factor_unfitted_GICA$factor_joint <- GICA_Joint$D
       Factor_unfitted_GICA$factor_group1 <- GICA_Group1$D
       Factor_unfitted_GICA$factor_group2 <- GICA_Group2$D
-      Unfitted_GICA_YK <- YK_compute(dd,TT,KK,r_J,r_G,Control_param,Factor_unfitted_GICA)
+      Unfitted_GICA_YK <- YW_compute(dd,TT,KK,r_J,r_G,Factor_unfitted_GICA)
       
       #-----------------------------------------------------------------#
       # 5. Double SCA and Double GICA:
@@ -228,13 +239,13 @@ for (case in 1:6){
                                          DSCA_Joint,
                                          DSCA_Group1,
                                          DSCA_Group2)
-      DSCA_YK <- YK_compute(dd,TT,KK,r_J,r_G,Control_param,DSCA_refitted)
+      DSCA_YK <- YW_compute(dd,TT,KK,r_J,r_G,DSCA_refitted)
       
       DGICA_refitted <- factor_regression(KK,r_J,r_G,model_dgp,
                                           DGICA_Joint,
                                           DGICA_Group1,
                                           DGICA_Group2)
-      DGICA_YK <- YK_compute(dd,TT,KK,r_J,r_G,Control_param,DGICA_refitted)
+      DGICA_YK <- YW_compute(dd,TT,KK,r_J,r_G,DGICA_refitted)
       
       #-----------------------------------------------------------------#
       # 4. Evaluation:

@@ -1,18 +1,30 @@
 #-----------------------------------------------------------------------------#
-# Code for producing results for plotting Figure 2 in Illustrative example section
+#   File name : Figure2.R    												  
+#
+#   Project : "Group integrative dynamic factor models 
+#             with application to multiple subject brain connectivity"
+#
+#   Maintainer : Younghoon Kim                     
+#
+#   Date : Sep. 1st, 2024
+#
+#   Purpose : Code for producing results for plotting Figure 2 in Illustrative example 
+#             section
+#
+#   R version 4.0.5 (2021-03-31)                                     
+#
+#   Input data file : /Illustrative_examples/result/sim1_d-T-K-_type2.RData
+# 
+#   Output data file : /Illustrative_examples/figures/Figure2.pdf
+#
+#   Required R packages : ggplot2_3.4.0, latex2exp_0.9.6, ggpubr_0.5.0, RColorBrewer_1.1-3,
+#                         reshape2_1.4.4, and gridExtra_2.3
 #-----------------------------------------------------------------------------#
-
-
 # -----------------------------------------------------------------------------#
 # Loading simulated data
 # -----------------------------------------------------------------------------#
-# Packages required
-library(ggplot2)
-library(latex2exp)
-library(ggpubr)
-library(RColorBrewer)
-library(reshape2)
-library(gridExtra)
+# Load source codes from the parent directory
+source(paste0(dirname(getwd()),"/","library_simulation.R"))
 
 # Defining function for a legend 
 g_legend <- function(a.gplot){
@@ -1219,7 +1231,7 @@ pl_CC_PSI_G2_type2 <- ggplot(CC_PSI_G2_type2,aes(x=size,y=value,color=method,fil
 # -----------------------------------------------------------------------------#
 mylegend_type2 <- g_legend(pl_R2_J_type2)
 
-pdf(file = "./Figure2.pdf", width = 11.5, height = 10.5)
+pdf(file = "./figures/Figure2.pdf", width = 11.5, height = 10.5)
 par(mar=c(0,0,0,0))
 grid.arrange(arrangeGrob(pl_R2_J_type2 + theme(legend.position="none"),
                          pl_R2_G1_type2 + theme(legend.position="none"), 

@@ -1,17 +1,29 @@
 #-----------------------------------------------------------------------------#
-# Code for producing results for plotting Figure 5 in Illustrative example section
+#   File name : Figure5.R    												  
+#
+#   Project : "Group integrative dynamic factor models 
+#             with application to multiple subject brain connectivity"
+#
+#   Maintainer : Younghoon Kim                     
+#
+#   Date : Sep. 1st, 2024
+#
+#   Purpose : code for producing results for plotting Figure 5 in Illustrative example 
+#             section
+#
+#   R version 4.0.5 (2021-03-31)                                    
+#
+#   Input data file : /Illustrative_examples/result/sim3_set-_d-T-K-.RData
+# 
+#   Output data file : /Illustrative_examples/figures/Figure5.pdf
+#
+#   Required R packages : ggplot2_3.4.0, latex2exp_0.9.6, ggpubr_0.5.0, RColorBrewer_1.1-3,
+#                         reshape2_1.4.4, and gridExtra_2.3
 #-----------------------------------------------------------------------------#
-
-
 # -----------------------------------------------------------------------------#
 # Loading simulated data
 # -----------------------------------------------------------------------------#
-# Packages required
-library(ggplot2)
-library(latex2exp)
-library(ggpubr)
-library(reshape2)
-library(RColorBrewer)
+source(paste0(dirname(getwd()),"/","library_simulation.R"))
 
 initial_rank <- c("(1,1)","(1,2)","(1,3)","(2,2)","(1,4)",
                   "(2,3)","(2,4)","(3,3)","(3,4)","(4,4)")
@@ -124,7 +136,7 @@ names(snr.labs) <- c("SNR=0.25","SNR=0.5","SNR=0.75","SNR=1.25","SNR=2","SNR=4")
 # -----------------------------------------------------------------------------#
 # Saving Figure 5
 # -----------------------------------------------------------------------------#
-pdf(file = "./Figure5.pdf", width = 11.5, height = 10.5)
+pdf(file = "./figures/Figure5.pdf", width = 11.5, height = 10.5)
 par(mar=c(0,0,0,0))
 ggplot(df_rank,
        aes(x=as.factor(value),fill=Var2)) +

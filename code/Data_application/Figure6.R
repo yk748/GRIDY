@@ -1,17 +1,33 @@
 #-----------------------------------------------------------------------------#
-# Code for producing Figure 6 in Data application section
+#   File name : Figure6.R    												  
+#
+#   Project : "Group integrative dynamic factor models 
+#             with application to multiple subject brain connectivity"
+#
+#   Maintainer : Younghoon Kim                     
+#
+#   Date : Sep. 1st, 2024
+#
+#   Purpose : code for producing results for plotting Figure 6 in Data application 
+#             section
+#
+#   R version 4.0.5 (2021-03-31)                                     
+#
+#   Input data file : /Data_application/result/result_final_X.RData
+#                     /Data_application/result/result_final_GRIDY.RData
+#                     /Data_application/result/result_final_SCA_P.RData
+#                     /Data_application/result/result_final_GICA.RData
+# 
+#   Output data file : /Illustrative_examples/figures/Figure6.pdf
+#
+#   Required R packages : ggplot2_3.4.0, latex2exp_0.9.6, ggpubr_0.5.0, RColorBrewer_1.1-3,
+#                         reshape2_1.4.4, and gridExtra_2.3
 #-----------------------------------------------------------------------------#
-
-
 # -----------------------------------------------------------------------------#
 # Preparation
 # -----------------------------------------------------------------------------#
-# Packages required
-library(ggplot2)
-library(latex2exp)
-library(ggpubr)
-library(RColorBrewer)
-library(reshape2)
+# Load source code from the parent directory
+source(paste0(dirname(getwd()),"/","library_application.R"))
 
 # Load data from the previous step
 load("./result/result_final_X.RData")
@@ -279,7 +295,7 @@ names(method.labs) <- c("GRIDY","SCA-P","GICA")
 # -----------------------------------------------------------------------------#
 # Saving Figure 6
 # -----------------------------------------------------------------------------#
-pdf(file = "./Figure6.pdf", width = 11.5, height = 10.5)
+pdf(file = "./figures/Figure6.pdf", width = 11.5, height = 10.5)
 par(mar=c(0,0,0,0))
 ggplot(df_R2,aes(x=variable,y=value,color=color,fill=color)) +
   geom_boxplot(size=0.1,alpha=0.5) +

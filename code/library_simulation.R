@@ -1,5 +1,80 @@
+# -----------------------------------------------------------------------------#
+# Running simulation
+# -----------------------------------------------------------------------------#
+# Packages required
+library(mvtnorm)
+library(Matrix)
+library(combinat)
+library(multiway) # For SCA and GICA
+library(ica) # For SCA and GICA
+library(readxl)
+library(ggplot2)
+library(latex2exp)
+library(ggpubr)
+library(RColorBrewer)
+library(reshape2)
+library(gridExtra)
+
 #--------------------------------------------------#
-# DGP function
+#   Function name : sim_model    												  
+#
+#   Project : "Group integrative dynamic factor models 
+#             with application to multiple subject brain connectivity"
+#
+#   Maintainer : Younghoon Kim                     
+#
+#   Date : Sep. 1st, 2024
+#
+#   Purpose : Data generating function used in Section 4. Illustrative examples
+#
+#   R version 4.0.5 (2021-03-31)                                    
+#
+#   Input:    
+#    @ Joint_rank : number of joint factors.
+#    @ Gr_Ind_rank : number of group individual factors.
+#    @ Num_var : number of variables.
+#    @ Num_sample : number of sample lengths.
+#    @ Num_subj_per_group : number of subjects in each group.
+#    @ Control_param : a set of parameters that determines the model. 
+#                      It includes type (1 and 2 provided. 1 stands for correlated factor series
+#                      and 2 stands for independent factors), 
+#                      sigma_xi (standard deviation of noise of factor models), 
+#                      J_per (percentage of rows belonging to the common components), 
+#                      b_bar_min (minimal value of joint loadings), 
+#                      b_bar_max (maximal value of joint loadings), 
+#                      b_tilde_min (minimal value of group individual loadings), 
+#                      b_tilde_max (maximal value of group individual loadings), 
+#                      sigma_c (standard deviation of factor series), 
+#                      sigma_eps (standard deviation of noise of observations).
+#                      Note that to make the factor series stable, 
+#                      a pre-calculated combinations of type and sigma_xi are required and 
+#                      this pair matches with the pre-calculated VAR transition matrices 
+#                      of the factor series. See Section 4.1 for the detail.
+# 
+#   Output:
+#    @ Xk : list of Num_sample x Num_sample generated observational multi-view blocks.
+#    @ X_bar : list of Num_sample x Num_sample generated joint components.
+#    @ X_tilde : list of Num_sample x Num_sample generated group individual components.
+#    @ Ek : list of Num_sample x Num_sample observation noises.
+#    @ scaled_X : centered and scaled Xk.
+#    @ scaled_X_comm : centered and scaled X_bar.
+#    @ scaled_X_G_ind : centered and scaled X_tilde.
+#    @ F_bar : joint factor series.
+#    @ F_tilde : group individual factor series.
+#    @ A_bar : scaled joint factor series.
+#    @ A_tilde : scaled group individual factor series.
+#    @ C_bar : scalers of joint factor series.
+#    @ C_tilde : scalers of group individual factor series.
+#    @ Psi_bar : VAR transition matrices of joint factor series.
+#    @ Psi_tilde : VAR transition matrices of group individual factor series.
+#    @ B_bar : joint loadings matrix
+#    @ B_tilde1 : group individual loadings matrix belonging to the first group.
+#    @ B_tilde2 : group individual loadings matrix belonging to the second group.
+#    @ comm_idx : index of variables belonging to joint components.
+#    @ group1_idx : index of variables belonging to first group individual components.
+#    @ group2_idx : index of variables belonging to second group individual components.
+#
+#   Required R packages : mvtnorm_1.2-5 and Matrix_1.5-1.
 #--------------------------------------------------#
 sim_model <- function(Joint_rank, Gr_Ind_rank, Num_var, Num_sample, Num_subj_per_group, Control_param){
   
@@ -202,7 +277,38 @@ sim_model <- function(Joint_rank, Gr_Ind_rank, Num_var, Num_sample, Num_subj_per
 
 
 #--------------------------------------------------#
-# Factor_regression function
+#   Function name : factor_regression    												  
+#
+#   Project : "Group integrative dynamic factor models 
+#             with application to multiple subject brain connectivity"
+#
+#   Maintainer : Younghoon Kim                     
+#
+#   Date : Sep. 1st, 2024
+#
+#   Purpose : subject-wise regression used in estimation of factor series. 
+#             See (18) in Section 3.3 for the detail.
+#
+#   R version 4.0.5 (2021-03-31)                                     
+#
+#   Input:    
+#    @ KK : number of subjects.
+#    @ r_J : number of joint factor series.
+#    @ r_G : number of group individual factor series.
+#    @ DGP : generated data. Observation from sim_model() is called.
+#    @ Series_joint : joint components from previous step. 
+#                     Estimates of joint loadings are called. 
+#    @ Series_group1 : group individual components of the first group from previous step.
+#                      Estimates of group individual loadings of the group 1 are called.
+#    @ Series_group2 : group individual components of the second group from previous step.
+#                      Estimates of group individual loadings of the group 2 are called.
+# 
+#   Output:
+#    @ factor_joint : estimated joint factor series.
+#    @ factor_group1 : estimated group individual factor series of group 1.
+#    @ factor_group2 : estimated group individual factor series of group 2.
+#
+#   Required R packages : Matrix_1.5-1.
 #--------------------------------------------------#
 factor_regression <- function(KK,r_J,r_G,DGP,Series_joint,Series_group1,Series_group2){
   
@@ -233,9 +339,40 @@ factor_regression <- function(KK,r_J,r_G,DGP,Series_joint,Series_group1,Series_g
 
 
 #--------------------------------------------------#
-# Yule-Walker function
+#   Function name : YW_compute   												  
+#
+#   Project : "Group integrative dynamic factor models 
+#             with application to multiple subject brain connectivity"
+#
+#   Maintainer : Younghoon Kim                     
+#
+#   Date : Sep. 1st, 2024
+#
+#   Purpose : compute Yule-Walker equation for estimating 
+#             vector autoregressive (VAR) transition matrices and 
+#             covariance matrices of noise for all subjects 
+#             by taking the output of factor_regression. 
+#
+#   R version 4.0.5 (2021-03-31)                                     
+#
+#   Input:    
+#    @ dd : number of variables.
+#    @ TT : sample lengths.
+#    @ KK : number of subjects.
+#    @ r_J : number of joint factors.
+#    @ r_G : number of group individual factors.
+#    @ factor_list: list of estimated factor series.
+# 
+#   Output:
+#    @ Psi_joint_hat : VAR transition matrices of estimated joint factor series.
+#    @ Psi_indiv_hat: VAR transition matrices of estimated group individual factor series.
+#    @ Eta_joint_hat : covariance matrices of noises of estimated joint factor series.
+#    @ Eta_G_indiv_hat : covariance matrices of noises of estimated 
+#                        group individual factor series.
+#
+#   Required R packages : Matrix_1.5-1.
 #--------------------------------------------------#
-YK_compute <- function(dd,TT,KK,r_J,r_G,Control_param,factor_list){
+YW_compute <- function(dd,TT,KK,r_J,r_G,factor_list){
   
   Psi_joint_hat <- array(NA,dim=c(r_J,r_J,(2*KK)))
   Eta_joint_hat <- array(NA,dim=c(r_J,r_J,(2*KK)))

@@ -1,5 +1,58 @@
 #--------------------------------------------------#
-# GICA
+#   Function name : gica   												  
+#
+#   Originally developed by Helwig and Snodgress (2019).                    
+#   
+#   citation: Helwig, N.E. and Snodgress, M.A. (2019). 
+#             "Exploring individual and group differences in 
+#              latent brain networks using cross-validated 
+#              simultaneous component analysis", NeuroImage, 201:116019.
+#
+#   Last visit date : Sep. 1st, 2024
+#
+#   R version 4.0.5 (2021-03-31)  
+#
+#   Purpose : this function is used to implement group ICA as a benchmark in Sections 4 and 5.
+#
+#   Note: this function is extracted from online supplementary file of  
+#         "Exploring individual and group differences in latent brain networks 
+#          using cross-validated simultaneous component analysis" 
+#          by Helwig, N.E. and Snodgress, M.A.
+#          Since the function description is not provided at the original source, 
+#          the following input and output are added by Younghoon Kim, 
+#         the author of "Group integrative dynamic factor models 
+#         with application to multiple subject brain connectivity".
+#
+#   Input: 
+#     @ X : 3-way tensor with dimensions # of samples x number of var x number of subjects.
+#     @ nc : number of factors.
+#     @ dual.reg: if True, dual regression is used for ICA. See Beckmann et al. (2009). 
+#                 Default is TRUE.
+#     @ method : option for choosing decomposition methods in package ica; 
+#                "fast" stands for FastICA  Algorithm by Hyvarinen (1999), 
+#                "jade" stands for JADE algorithm by Cardoso & Souloumiac (1993,1996), 
+#                and "info" stands for Infomax Algorithm by Bell & Sejnowski (1995). 
+#                The default is "fast".
+#
+#   Output:
+#     @ scamod: gica class output. It contains C mod (scaler), B mod (spatial maps), 
+#               D mod (unscaled time courses), and other output inherited from either of 
+#               icafast, icajade, or icaimax in the package ica.
+#
+#   Required R packages : Matrix_1.5-1, ica_1.0-3, and multiway_1.0-6 CMLS_1.0-1
+#   
+#   Reference:
+#    Beckmann, C. F., Mackay, C. E., Filippini, N., & Smith, S. M. (2009). 
+#    "Group comparison of resting-state FMRI data using multi-subject ICA and dual regression", 
+#     Neuroimage, 47(Suppl 1), S148.
+#    Hyvarinen, A. (1999). "Fast and robust fixed-point algorithms for 
+#    independent component analysis", IEEE Transactions on Neural Networks, 10(3), 626-634. 
+#    Cardoso, J.F., & Souloumiac, A. (1993). "Blind beamforming for non-Gaussian signals" 
+#    IEEE Proceedings-F, 140(6), 362-370. 
+#    Cardoso, J.F., & Souloumiac, A. (1996). "Jacobi angles for simultaneous diagonalization",  
+#    SIAM Journal on Matrix Analysis and Applications, 17(1), 161-164. 
+#    Bell, A.J. & Sejnowski, T.J. (1995). "An information-maximization approach to 
+#    blind separation and blind deconvolution", Neural Computation, 7(6), 1129-1159.
 #--------------------------------------------------#
 gica <- 
   function(X, nc, dual.reg = TRUE, 
@@ -79,45 +132,3 @@ gica <-
     return(scamod)
     
   }
-
-reorder.gica <-
-  function(x, neworder, ...){
-    
-    # get number of factors
-    if(is.list(x$D)){
-      nfac <- ncol(x$D[[1]])
-    } else {
-      nfac <- ncol(x$D)
-    }
-    
-    # check new order
-    neworder <- as.integer(neworder)
-    if(!identical(sort(neworder), 1:nfac)) stop("Input 'neworder' must contain all unique integers between 1 and", nfac, "(number of components).")
-    
-    # reorder mode A weights
-    if(is.list(x$D)){
-      for(k in 1:length(x$D)) x$D[[k]] <- x$D[[k]][,neworder,drop=FALSE]
-    } else {
-      x$D <- x$D[,neworder,drop=FALSE]
-    }
-    
-    # reorder mode B weights
-    if(is.list(x$B)){
-      for(k in 1:length(x$B)) x$B[[k]] <- x$B[[k]][,neworder,drop=FALSE]
-    } else {
-      x$B <- x$B[,neworder,drop=FALSE]
-    }
-    
-    # reorder mode C weights
-    x$C <- x$C[,neworder,drop=FALSE]
-    
-    # reorder group map
-    if(!is.null(x$grpmap)){
-      x$grpmap <- x$grpmap[,neworder,drop=FALSE]
-    }
-    
-    # return x
-    x
-    
-  }
-

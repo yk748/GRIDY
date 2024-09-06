@@ -1,18 +1,28 @@
 #-----------------------------------------------------------------------------#
-# Code for producing results for the third simulation setting in Illustrative example section
-# Codes for plotting Figure 5 is provided separately
+#   File name : Simulation_third.R    												  
+#
+#   Project : "Group integrative dynamic factor models 
+#             with application to multiple subject brain connectivity"
+#
+#   Maintainer : Younghoon Kim                     
+#
+#   Date : Sep. 1st, 2024
+#
+#   Purpose : code for producing results for the third simulation setting in 
+#             Illustrative example section. Codes for plotting Figure 5 
+#             is provided separately
+#
+#   R version 4.0.5 (2021-03-31)                                     
+#
+#   Input data file : ---- 
+# 
+#   Output data file : /Illustrative_examples/result/sim3_set-_d-T-K-.RData
+#
+#   Required R packages : mvtnorm_1.2-5 and Matrix_1.5-1.
 #-----------------------------------------------------------------------------#
-
 # -----------------------------------------------------------------------------#
 # Running rank selection
 # -----------------------------------------------------------------------------#
-# Packages required
-library(mvtnorm)
-library(Matrix)
-library(combinat)
-library(multiway) # For SCA and GICA
-library(ica) # For SCA and GICA
-
 # Load rotational bootstrap from the parent directory
 source(paste0(dirname(getwd()),"/","Rotational_bootstrap.R"))
 source(paste0(dirname(getwd()),"/","library_simulation.R"))

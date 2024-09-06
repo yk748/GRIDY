@@ -1,19 +1,33 @@
 #-----------------------------------------------------------------------------#
-# Code for producing results in Data application section
-# Code for plotting each figure is provided separately
+#   File name : Application.R    												  
+#
+#   Project : "Group integrative dynamic factor models 
+#             with application to multiple subject brain connectivity"
+#
+#   Maintainer : Younghoon Kim                     
+#
+#   Date : Sep. 1st, 2024
+#
+#   Purpose : code for producing results in Data application section. 
+#             Code for plotting each figure is provided separately
+#
+#   R version 4.0.5 (2021-03-31)                                     
+#
+#   Input data file : /Data_application/data/...-ccs_filt_noglobal_rois_dosenbach160.csv
+#                     /Data_application/data/file_name_list.xlsx
+#                     /Data_application/data/dos160_labels.xlsx
+# 
+#   Output data file : /Data_application/result/result_intermediate.RData
+#                      /Data_application/result/result_final_X.RData
+#                      /Data_application/result/result_final_GRIDY.RData
+#                      /Data_application/result/result_final_SCA_P.RData
+#                      /Data_application/result/result_final_GICA.RData
+#
+#   Required R packages : readxl_1.4.1 , mvtnorm_1.2-5, and Matrix_1.5-1.
 #-----------------------------------------------------------------------------#
-
 # -----------------------------------------------------------------------------#
 # Step 0: Set up
 # -----------------------------------------------------------------------------#
-# Packages required
-library(readxl)
-library(mvtnorm)
-library(Matrix)
-library(combinat)
-library(multiway) # For SCA and GICA
-library(ica) # For SCA and GICA
-
 # Load source code from the parent directory
 source(paste0(dirname(getwd()),"/","Rotational_bootstrap.R"))
 source(paste0(dirname(getwd()),"/","gica.R")) # For SCA and GICA
@@ -61,11 +75,11 @@ for (kk in 1:Tot_subject){
 # Step 2: Rank selection
 # -----------------------------------------------------------------------------#
 # rotational bootstrap:
-r_hat <- vector("numeric",length(Tot_subject))
+r_hat <- vector("numeric",Tot_subject)
 d <- 160
 
 set.seed(1234)
-for (kk in 1:length(Tot_subject)){
+for (kk in 1:Tot_subject){
   time_start <- Sys.time()
   T_k <- dim(list_scaled_X[[kk]])[2]
   
@@ -89,7 +103,8 @@ df_index$site <- file_name_table$site_idx
 
 # Save the intermediate result
 # This data is used for drawing Figure S1
-save(df_index,r_hat,Tot_subject,file_name_table,file="./result/result_intermediate.RData")
+save(voxel_name_table,df_index,r_hat,Tot_subject,file_name_table,
+     file="./result/result_intermediate.RData")
 
 # -----------------------------------------------------------------------------#
 # Step 3: Screening subjects from the rank selection result
@@ -190,15 +205,15 @@ GICA_Group2 <- gica(Group2_block, nc = rG2, dual.reg = FALSE, center = FALSE)
 # -----------------------------------------------------------------------------#
 GRIDY_refitted <- factor_regression(K1_idx,K2_idx,rJ,rG1,rG2,
                                     X_scale_ext,SCA_PF2_Joint,SCA_PF2_Group1,SCA_PF2_Group2)
-GRIDY_YK <- YK_compute(K1_idx,K2_idx,rJ,rG1,rG2,X_scale_ext,GRIDY_refitted)
+GRIDY_YK <- YW_compute(K1_idx,K2_idx,rJ,rG1,rG2,X_scale_ext,GRIDY_refitted)
 
 SCA_P_refitted <- factor_regression(K1_idx,K2_idx,rJ,rG1,rG2,
                                     X_scale_ext,SCA_P_Joint,SCA_P_Group1,SCA_P_Group2)
-SCA_P_YK <- YK_compute(K1_idx,K2_idx,rJ,rG1,rG2,X_scale_ext,SCA_P_refitted)
+SCA_P_YK <- YW_compute(K1_idx,K2_idx,rJ,rG1,rG2,X_scale_ext,SCA_P_refitted)
 
 GICA_refitted <- factor_regression(K1_idx,K2_idx,rJ,rG1,rG2,
                                    X_scale_ext,GICA_Joint,GICA_Group1,GICA_Group2)
-GICA_YK <- YK_compute(K1_idx,K2_idx,rJ,rG1,rG2,X_scale_ext,GICA_refitted)
+GICA_YK <- YW_compute(K1_idx,K2_idx,rJ,rG1,rG2,X_scale_ext,GICA_refitted)
 
 
 # Save the final result

@@ -1,18 +1,29 @@
 #-----------------------------------------------------------------------------#
-# Code for producing results for plotting Figure 3 in Illustrative example section
+#   File name : Figure3.R    												  
+#
+#   Project : "Group integrative dynamic factor models 
+#             with application to multiple subject brain connectivity"
+#
+#   Maintainer : Younghoon Kim                     
+#
+#   Date : Sep. 1st, 2024
+#
+#   Purpose : Code for producing results for plotting Figure 3 in Illustrative example 
+#             section
+#
+#   R version 4.0.5 (2021-03-31)                                     
+#
+#   Input data file : /Illustrative_examples/result/sim2_snr-_type1.RData
+# 
+#   Output data file : /Illustrative_examples/figures/Figure3.pdf
+#
+#   Required R packages : ggplot2_3.4.0, latex2exp_0.9.6, ggpubr_0.5.0, RColorBrewer_1.1-3,
+#                         reshape2_1.4.4, and gridExtra_2.3
 #-----------------------------------------------------------------------------#
-
-
 # -----------------------------------------------------------------------------#
 # Loading simulated data
 # -----------------------------------------------------------------------------#
-# Packages required
-library(ggplot2)
-library(latex2exp)
-library(ggpubr)
-library(RColorBrewer)
-library(reshape2)
-library(gridExtra)
+source(paste0(dirname(getwd()),"/","library_simulation.R"))
 
 # Defining function for a legend 
 g_legend <- function(a.gplot){
@@ -1051,7 +1062,7 @@ pl_CC_PSI_G2_type1 <- ggplot(CC_PSI_G2_type1,aes(x=SNR,y=value,color=method,fill
 # -----------------------------------------------------------------------------#
 mylegend_type1 <- g_legend(pl_R2_J_type1)
 
-pdf(file = "./Figure3.pdf", width = 11.5, height = 10.5)
+pdf(file = "./figures/Figure3.pdf", width = 11.5, height = 10.5)
 par(mar=c(0,0,0,0))
 grid.arrange(arrangeGrob(pl_R2_J_type1 + theme(legend.position="none"),
                          pl_R2_G1_type1 + theme(legend.position="none"), 
