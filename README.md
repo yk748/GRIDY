@@ -1,6 +1,6 @@
 # GRIDY
 
-GRoup Integrative DYnamic factor models (GRIDY) is a dynamic factor model-based group-level analysis of multiple subjects' time series data. A fully functioning package is under development and is expected to be released soon. The corresponding manuscript is Kim et al. ([2024](#ref-gridy)). The version that contains processed files including simulation and data application results from these R codes can be found at https://zenodo.org/records/13711280.
+GRoup Integrative DYnamic factor models (GRIDY) is a dynamic factor model-based group-level analysis of multiple subjects' time series data. A fully functioning package is under development and is expected to be released soon. The corresponding manuscript is Kim, Fisher, and Pipiras ([2024](#ref-gridy)). The version that contains processed files including simulation and data application results from these R codes can be found at https://zenodo.org/records/13711280.
 
 ## Reference
 
